@@ -7,6 +7,7 @@ package com.Thriftshop.Thriftshop;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -20,33 +21,40 @@ import org.springframework.web.bind.annotation.RestController;
  *
  * @author muham
  */
+@CrossOrigin
 @RestController
-@RequestMapping(value = "/thrift")
+@RequestMapping("/thrift")
 
 public class DatabaseController {
     @Autowired
     RepositoryThrift repositoryThrift;
             
-    @PostMapping(value = "/addthrift")
+    @PostMapping("/addthrift")
     public Thrift addthrift(@RequestBody Thrift Param)
     {
         repositoryThrift.save(Param);
         return Param;
     }
     
-    @GetMapping(value = "/allthrift")
+    @GetMapping("/allthrift")
     public List<Thrift> allthrift()
     {
         return repositoryThrift.findAll();
     }
     
-    @PutMapping(value = "/updatethrift")
+    @GetMapping("/allthriftbyid")
+    public Thrift getthrift(@RequestParam int id)
+    {
+        return repositoryThrift.findById(id).get();
+    }
+    
+    @PutMapping("/updatethrift")
     public Thrift updatethrift(@RequestBody Thrift Param)
     {
        return repositoryThrift.save(Param);
     }
     
-    @DeleteMapping(value = "/hapusthrift")
+    @DeleteMapping("/hapusthrift")
     public List<Thrift> hapusthrift(@RequestParam int id)
     {
         repositoryThrift.deleteById(id);
